@@ -1,0 +1,188 @@
+/**
+ * Responsive Grid LESS
+ *
+ * Repo - http://guthub.com/
+ * Created by Matej Svajger
+ *
+ *
+/* Table of Contents
+==================================================
+    #Base 1260 Grid
+    #Small Screen (960+ Desktop)
+    #Tablet (Portrait)
+    #Mobile (Portrait)
+    #Mobile (Landscape)
+    #Clearing */
+
+
+@page_width: 100%;
+
+
+/* Reusable column setup */
+.mixin-col {
+     border:0px solid rgba(0,0,0,0);
+     float:left;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing:border-box;
+     box-sizing:border-box;
+     -moz-background-clip:padding-box !important;
+     -webkit-background-clip:padding-box !important;
+     background-clip:padding-box !important;
+}
+.col {
+     .mixin-col;
+}
+
+.mixin-span(@num, @gutter_pc, @gutter_px, @padding, @max_columns, @full_width:100%) {
+    @one_col: (@full_width - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+    width:(@one_col * @num) + (@gutter_pc * (@num - 1));
+    border-left-width:@gutter_px;
+    padding:@padding;
+    margin-left:@gutter_pc;
+}
+.mixin-span_first {
+    margin-left:0;
+    border-left-width:0;
+}
+ 
+.row {
+     margin: 0 auto;
+     width: @page_width;
+     overflow:hidden;
+     position:relative;
+}
+ 
+    
+
+/* #Base Grid - screens - over 1260px
+================================================== */
+
+    @media screen and (min-width: 1260px) {
+        
+        .col {
+            margin-left:0;
+            padding:0;
+        }
+        
+        /* --- Responsive Grid variables ---*/ 
+        @max_columns: 12;
+        @padding: 0 10px;
+        @gutter_px: 0;
+        @gutter_pc: 1.5%;
+        
+        .row .col:first-child {
+            .mixin-span_first;
+        }
+        
+        .span_1 {
+            .mixin-span(1, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_2 {
+            .mixin-span(2, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_3 {
+            .mixin-span(3, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_4 {
+            .mixin-span(4, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_5 {
+            .mixin-span(5, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_6 {
+            .mixin-span(6, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_7 {
+            .mixin-span(7, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_8 {
+            .mixin-span(8, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_9 {
+            .mixin-span(9, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_10 {
+            .mixin-span(10, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_11 {
+            .mixin-span(11, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
+        }
+        .span_12 {
+            .mixin-span_first;
+            width:100%;
+        }
+    }
+
+/* #Small screen (960+ Desktop)
+================================================== */
+
+    /* Note: Layout for a min width of 960px */
+
+    @media only screen and (min-width: 960px) and (max-width: 1259px) {
+
+    }
+
+
+/* #Tablet (Portrait)
+================================================== */
+
+    /* Note: Layout for a min width of 768px */
+
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+
+    }
+
+
+/*  #Mobile (Portrait)
+================================================== */
+
+    /* Note: Layout for a max width of 767px */
+
+    @media only screen and (max-width: 767px) {
+
+    }
+
+/* #Mobile (Landscape)
+================================================== */
+
+    /* Note: Layout for a min width of 480px */
+
+    @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+    }
+
+
+/* #Clearing
+================================================== */
+
+    /* Self Clearing Goodness */
+    .row:after { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+
+    /* Use clearfix class on parent to clear nested columns,
+    or wrap each row of columns in a <div class="row"> */
+    .clearfix:before,
+    .clearfix:after,
+    .row:before,
+    .row:after {
+      content: '\0020';
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0; }
+    .row:after,
+    .clearfix:after {
+      clear: both; }
+    .row,
+    .clearfix {
+      zoom: 1; }
+
+    /* You can also use a <br class="clear" /> to clear columns */
+    .clear {
+      clear: both;
+      display: block;
+      overflow: hidden;
+      visibility: hidden;
+      width: 0;
+      height: 0;
+    }
