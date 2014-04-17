@@ -109,7 +109,6 @@ module.exports = function(grunt) {
                 },
                 files: {
                     src: [
-                        'bin/demo.html',
                         'bin/demo.css',
                         'bin/grid.css',
                         'bin/grid.min.css'

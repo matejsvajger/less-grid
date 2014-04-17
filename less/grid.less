@@ -1,7 +1,7 @@
 
 /* Table of Contents
 ==================================================
-    #Base 1260 Grid
+    #Base Grid
     #Small Screen (960+ Desktop)
     #Tablet (Portrait)
     #Mobile (Portrait)
@@ -11,113 +11,48 @@
     */
 
 
-@page_width: 100%;
+  /* --- Responsive Grid variables ---*/ 
+  @page_width: 1260px;
+  @max_columns: 12;
+  @padding: 0 10px;
+  @gutter: 4px;
 
-
-//- Reusable column setup -//
-.mixin-col() {
-     border:0px solid rgba(0,0,0,0);
-     float:left;
-     -webkit-box-sizing:border-box;
-     -moz-box-sizing:border-box;
-     box-sizing:border-box;
-     -moz-background-clip:padding-box !important;
-     -webkit-background-clip:padding-box !important;
-     background-clip:padding-box !important;
-}
-
-.col,
-.cols {
-     .mixin-col;
-}
-
-.mixin-span(@num, @gutter_pc, @gutter_px, @padding, @max_columns, @full_width:100%) {
-    @one_col: (@full_width - (@gutter_pc * (@max_columns - 1))) / @max_columns;
-    width:(@one_col * @num) + (@gutter_pc * (@num - 1));
-    border-left-width:@gutter_px;
-    padding:@padding;
-    margin-left:@gutter_pc;
-}
-.mixin-span_first {
-    margin-left:0;
-    border-left-width:0;
-}
  
-.row {
-     margin: 0 auto;
-     width: @page_width;
-     overflow:hidden;
-     position:relative;
-}
- 
-    
+
 
 /* #Base Grid - screens - over 1260px
 ================================================== */
+                
+      .col,
+      .cols {
+           .mixin-col;
+      }
+       
+      .row {
+          margin: 0 auto;
+          overflow:hidden;
+          position:relative;
+          .mixin-width(@page_width);
+      }
 
-    @media screen and (min-width: 1260px) {
-        
-        .col {
-            margin-left:0;
-            padding:0;
-        }
-        
-        /* --- Responsive Grid variables ---*/ 
-        @max_columns: 12;
-        @padding: 0 10px;
-        @gutter_px: 0;
-        @gutter_pc: 1.5%;
-        
-        .row .col:first-child {
-            .mixin-span_first;
-        }
-        
-        .span_1 {
-            .mixin-span(1, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_2 {
-            .mixin-span(2, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_3 {
-            .mixin-span(3, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_4 {
-            .mixin-span(4, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_5 {
-            .mixin-span(5, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_6 {
-            .mixin-span(6, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_7 {
-            .mixin-span(7, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_8 {
-            .mixin-span(8, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_9 {
-            .mixin-span(9, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_10 {
-            .mixin-span(10, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_11 {
-            .mixin-span(11, @gutter_pc, @gutter_px, @padding, @max_columns, @page_width);
-        }
-        .span_12 {
-            .mixin-span_first;
-            width:100%;
-        }
+    .row .col:first-child,
+    .row .cols:first-child {
+        .mixin-span_first;
     }
+
+
+    .create-spans(@max_columns);
+        
 
 /* #Small screen (960+ Desktop)
 ================================================== */
 
     /* Note: Layout for a min width of 960px */
 
-    @media only screen and (min-width: 960px) and (max-width: 1259px) {
+    @media only screen and (min-width: 960px) and (max-width: @page_width) {
 
+        .row              { .mixin-width(@page_width, 960px); }
+        .create-spans-px  ( @max_columns, 960px );
     }
 
 
@@ -128,6 +63,8 @@
 
     @media only screen and (min-width: 768px) and (max-width: 959px) {
 
+        .row              { .mixin-width(@page_width, 768px); }
+        .create-spans-px  ( @max_columns, 768px );
     }
 
 
@@ -138,6 +75,8 @@
 
     @media only screen and (max-width: 767px) {
 
+        .row              { .mixin-width(@page_width, 300px); }
+        .create-spans-px  ( @max_columns, 300px );
     }
 
 /* #Mobile (Landscape)
@@ -147,7 +86,65 @@
 
     @media only screen and (min-width: 480px) and (max-width: 767px) {
 
+        .row              { .mixin-width(@page_width, 480px); }
+        .create-spans-px  ( @max_columns, 480px );
     }
+
+
+//- #Reusable Column setup
+//-=============================================== */
+    .mixin-col() {
+         border:0px solid rgba(0,0,0,0);
+         float:left;
+         -webkit-box-sizing:border-box;
+         -moz-box-sizing:border-box;
+         box-sizing:border-box;
+         -moz-background-clip:padding-box !important;
+         -webkit-background-clip:padding-box !important;
+         background-clip:padding-box !important;
+    }
+
+    .mixin-span(@num, @gutter, @padding, @max_columns, @full_width: @page_width) when (ispixel(@gutter)) {
+        @gutter_pc: ((@gutter * 100) / @full_width);
+        @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+        width:(@one_col * @num) + (@gutter_pc * (@num - 1));
+        padding:@padding;
+        margin-left:@gutter;
+    }
+    .mixin-span(@num, @gutter, @padding, @max_columns, @width) when (ispercentage(@gutter)) {
+        @gutter_pc: @gutter;
+        @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+        width:(@one_col * @num) + (@gutter_pc * (@num - 1));
+        padding:@padding;
+        margin-left:@gutter;
+    }
+
+    .mixin-span_first() {
+        margin-left:0;
+    }
+
+    .mixin-width(@width, @set: @page_width) when (ispixel(@width)) { width: @set; }
+    .mixin-width(@width) when (ispercentage(@width)) { width: @width; }
+
+//- #Column generator
+//-=============================================== */
+    // generate the grid columns
+    .create-spans(@n, @width: @page_width, @i: 1) when (@i < @n) {
+        .span_@{i} {
+            .mixin-span(@i, @gutter, @padding, @max_columns, @width);
+        }
+        // next iteration
+        .create-spans(@n, @width, (@i + 1));
+    }
+    // full width column gets special styles
+    .create-spans(@n, @width, @i: 1) when (@i = @n) {
+        .span_@{i} {
+            .mixin-span_first;
+            width:100%;
+        }
+    }
+    // only recalculate span widths when gutter is a piel value
+    .create-spans-px(@n, @width) when (ispixel(@gutter)) { .create-spans(@n, @width); }
 
 
 /* #Clearing

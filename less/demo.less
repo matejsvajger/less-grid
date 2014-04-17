@@ -1,7 +1,10 @@
 @import 'http://fonts.googleapis.com/css?family=Exo:200,700%7COpen+Sans:400,400italic';
 
+
+html, body { padding:0; margin:0; height: 100%; }
+
 body {
-	ine-height: 1.5;
+	line-height: 1.5;
 	font-family: Open Sans, sans-serif;
 	color: #405060;
 	font-size: 10pt;
@@ -15,15 +18,16 @@ body {
 	// rgba(200, 80, 200, 0.1)
 }
 
-html, body { height: 100%; }
 
 
-.col {
+.col,
+.cols {
 	background: white;
 	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1), -1px 1px 0 rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(0, 0, 0, 0.0), 0 2px 0 rgba(0, 0, 0, 0.1);
 	border-radius: 2px;
 	padding-top: 40px;
 	padding-bottom: 80px;
-	margin-bottom: 20px;
+	margin-bottom: 4px;
 	opacity: 0.9;
+	min-height: 180px;
 }
