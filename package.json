@@ -1,25 +1,26 @@
 {
-  "name": "Responsive Grid",
-  "description": "Responsive grid with fluid or fixed breakpoints",
-  "version": "1.0.0",
+  "name": "LESS Grid",
+  "description": "Responsive 12 column grid with fluid or fixed breakpoints",
+  "version": "1.0.1",
   "keywords": [
+    "less",
     "css",
     "grid",
-    "responsvie"
+    "responsive"
   ],
   "compilePath": "../dist/",
-  "homepage": "http://pikslab.com",
+  "homepage": "https://github.com/matejsvajger/less-grid",
   "os": [
     "web"
   ],
   "author": {
     "name": "Matej Svajger",
-    "email": "matej.svajger@pikslab.com"
+    "email": "hello@matejsvajger.com"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com"
+      "url": "https://github.com/matejsvajger/less-grid/blob/master/LICENSE"
     }
   ],
   "devDependencies": {

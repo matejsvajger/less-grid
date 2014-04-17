@@ -4,13 +4,11 @@
  */
 
 
-var LIVERELOAD_PORT = 35730,
+var SERVER_PORT = 9000+Math.round(Math.random()*100),
+    LIVERELOAD_PORT = 35730+Math.round(Math.random()*100),
     lrSnippet = require('connect-livereload')({
         port: LIVERELOAD_PORT
     }),
-    mountFolder = function(connect, dir) {
-        return connect.static('../dist');
-    },
     livereloadMiddleware = function(connect, options) {
         return [
             // Inject a livereloading script into static files.
@@ -111,8 +109,10 @@ module.exports = function(grunt) {
                 },
                 files: {
                     src: [
-                        'bin/styles.css',
-                        'bin/styles.min.css',
+                        'bin/demo.html',
+                        'bin/demo.css',
+                        'bin/grid.css',
+                        'bin/grid.min.css'
                     ]
                 }
             }
@@ -160,8 +160,8 @@ module.exports = function(grunt) {
                 },
                 tasks: [],
                 files: [
-                    '../dist/*.html',
-                    '../dist/css/*.css'
+                    '<%= pkg.compilePath %>*.html',
+                    '<%= pkg.compilePath %>css/*.css'
                 ]
             }
         },
@@ -169,9 +169,9 @@ module.exports = function(grunt) {
         connect: {
             dist: {
                 options: {
-                    port: 9080,
+                    port: SERVER_PORT,
                     hostname: '0.0.0.0',
-                    base: '../dist',
+                    base: '<%= pkg.compilePath %>',
                     middleware: livereloadMiddleware
                 }
             }

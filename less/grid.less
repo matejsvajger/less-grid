@@ -1,10 +1,4 @@
-/**
- * Responsive Grid LESS
- *
- * Repo - http://guthub.com/
- * Created by Matej Svajger
- *
- *
+
 /* Table of Contents
 ==================================================
     #Base 1260 Grid
@@ -12,14 +6,16 @@
     #Tablet (Portrait)
     #Mobile (Portrait)
     #Mobile (Landscape)
-    #Clearing */
+    #Clearing 
+    *
+    */
 
 
 @page_width: 100%;
 
 
-/* Reusable column setup */
-.mixin-col {
+//- Reusable column setup -//
+.mixin-col() {
      border:0px solid rgba(0,0,0,0);
      float:left;
      -webkit-box-sizing:border-box;
@@ -29,7 +25,9 @@
      -webkit-background-clip:padding-box !important;
      background-clip:padding-box !important;
 }
-.col {
+
+.col,
+.cols {
      .mixin-col;
 }
 
