@@ -1,0 +1,81 @@
+/* #Base Grid - screens - over 1260px
+================================================== */
+                
+    .column,
+    .columns {
+         .mixin-col;
+    }
+     
+    .row {
+        margin: 0 auto;
+        overflow:hidden;
+        position:relative;
+        .mixin-width(@page_width);
+    }
+
+    .row .column:first-child,
+    .row .columns:first-child {
+        .mixin-span_first;
+    }
+
+    .create-spans(@max_columns);
+
+//- .span_all # dynamicaly generated # -// 
+    .span_half       { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, @page_width); }
+    .span_one_third  { .mixin-span(@max_columns / 3, @gutter, @padding, @max_columns, @page_width); }
+    .span_two_thirds { .mixin-span(2 * (@max_columns / 3), @gutter, @padding, @max_columns, @page_width); }
+        
+
+/* #Small screen (960+ Desktop)
+================================================== */
+
+    /* Note: Layout for a min width of 960px */
+
+    @media only screen and (min-width: 960px) and (max-width: @page_width) {
+
+        .row              { .mixin-width(@page_width, 960px); }
+        .create-spans-px  ( @max_columns, 960px );
+    }
+
+
+/* #Tablet (Portrait)
+================================================== */
+
+    /* Note: Layout for a min width of 768px */
+
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+
+        .row              { .mixin-width(@page_width, 768px); }
+        .create-spans-px  ( @max_columns, 768px );
+    }
+
+
+/* #Mobile (Landscape)
+================================================== */
+
+    /* Note: Layout for a min width of 480px */
+
+    @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+        .row                  { .mixin-width(@page_width, 480px); }
+        .span_half            { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, 480px); }
+        .create-mobile-spans  ( @max_columns );
+        .span_one_third,
+        .span_two_thirds      { .mixin-span_full(0); }
+    }
+
+
+/*  #Mobile (Portrait)
+================================================== */
+
+    /* Note: Layout for a max width of 767px */
+
+    @media only screen and (max-width: 767px) {
+
+        .row              { .mixin-width(@page_width, 300px); }
+
+        .create-mobile-spans  ( @max_columns );
+        .span_half,
+        .span_one_third,
+        .span_two_thirds      { .mixin-span_full(0); }
+    }

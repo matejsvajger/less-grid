@@ -3,18 +3,50 @@ html(lang="en")
   head
     title Responsive Grid Layout
     meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1")
     link(rel="stylesheet", href="css/grid.css")
     link(rel="stylesheet", href="css/demo.css")
   body
     .row
-      .span_12.col
+      .span_all.columns
+        .content
     .row
-      .span_6.col
-      .span_6.col
+      .span_half.columns
+        .content
+      .span_half.columns
+        .content
     .row
-      .span_4.col
-      .span_4.col
-      .span_4.col
+      .span_one_third.columns
+        .content
+      .span_one_third.columns
+        .content
+      .span_one_third.columns
+        .content
     .row
-      .span_3.col
-      .span_9.col
+      .span_one_third.columns
+        .content
+      .span_two_thirds.columns
+        .content
+    .row
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content
+      .span_2.column
+        .content
+      .span_1.column
+        .content
+      .span_1.column
+        .content

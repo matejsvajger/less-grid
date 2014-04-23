@@ -64,7 +64,7 @@ module.exports = function(grunt) {
                     sourceMapFilename: 'bin/grid.css.map'
                 },
                 files: {
-                    'bin/grid.css': 'less/grid.less'
+                    'bin/grid.css': 'less/grid/grid.less'
                 }
             },
             minifyCore: {
