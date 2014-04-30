@@ -1,14 +1,14 @@
 {
   "name": "LESS Grid",
-  "description": "Responsive dynamic column grid with fluid or fixed breakpoints",
-  "version": "1.0.3",
+  "description": "Responsive dynamic grid generator with fluid or fixed breakpoints",
+  "version": "1.0.0",
   "keywords": [
     "less",
     "css",
     "grid",
     "responsive"
   ],
-  "compilePath": "../dist/",
+  "compilePath": "dist/",
   "homepage": "https://github.com/matejsvajger/less-grid",
   "os": [
     "web"

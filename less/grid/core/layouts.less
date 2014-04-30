@@ -21,6 +21,7 @@
     .create-spans(@max_columns);
 
 //- .span_all # dynamicaly generated # -// 
+    .span_qtr        { .mixin-span(@max_columns / 4, @gutter, @padding, @max_columns, @page_width); }
     .span_half       { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, @page_width); }
     .span_one_third  { .mixin-span(@max_columns / 3, @gutter, @padding, @max_columns, @page_width); }
     .span_two_thirds { .mixin-span(2 * (@max_columns / 3), @gutter, @padding, @max_columns, @page_width); }
@@ -58,6 +59,7 @@
     @media only screen and (min-width: 480px) and (max-width: 767px) {
 
         .row                  { .mixin-width(@page_width, 480px); }
+        .span_qtr,
         .span_half            { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, 480px); }
         .create-mobile-spans  ( @max_columns );
         .span_one_third,
