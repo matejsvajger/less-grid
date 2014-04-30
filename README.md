@@ -120,6 +120,7 @@ However if we wish to have a better responsive layout the following markup will 
  * 2014-04-17   v0.2.0   Added dynamic column generation
  * 2014-04-17   v0.1.1   Updated Grunt config
  * 2014-04-16   v0.1.0   Initial commit
+
 ---
 
 Task submitted by [Matej Svajger](mailto://hello@matejsvajger.com/)
