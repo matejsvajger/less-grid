@@ -1,31 +1,50 @@
-/* #Base Grid - screens - over 1260px
+/* #Base Grid
 ================================================== */
                 
-    .column,
-    .columns {
-         .mixin-col;
-    }
-     
     .row {
         margin: 0 auto;
-        overflow:hidden;
         position:relative;
         .mixin-width(@page_width);
+    }
+
+    .row .row {
+        width: 100%;
+        margin: 0;
     }
 
     .row .column:first-child,
     .row .columns:first-child {
         .mixin-span_first;
     }
+    .row .row .column:first-child,
+    .row .row .columns:first-child {
+        .mixin-span_first;
+        padding-left: 0;
+    }
+    .row .row .column:last-child,
+    .row .row .columns:last-child {
+        .mixin-span_first;
+        padding-right: 0;
+    }
+
+    .column,
+    .columns {
+         .mixin-col;
+    }
+
+    .column-spacing {
+        padding:@padding;
+        margin-left:@gutter;
+    }
 
     .create-spans(@max_columns);
 
-//- .span_all # dynamicaly generated # -// 
-    .span_qtr        { .mixin-span(@max_columns / 4, @gutter, @padding, @max_columns, @page_width); }
-    .span_half       { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, @page_width); }
-    .span_one_third  { .mixin-span(@max_columns / 3, @gutter, @padding, @max_columns, @page_width); }
-    .span_two_thirds { .mixin-span(2 * (@max_columns / 3), @gutter, @padding, @max_columns, @page_width); }
-        
+//- .span_all # dynamicaly generated # -//
+    .qtr        { .mixin-span(@max_columns / 4, @gutter, @padding, @max_columns, @page_width); &:extend(.column-spacing); .extend-column(); }
+    .half       { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, @page_width); &:extend(.column-spacing); .extend-column(); }
+    .one-third  { .mixin-span(@max_columns / 3, @gutter, @padding, @max_columns, @page_width); &:extend(.column-spacing); .extend-column();}
+    .two-thirds { .mixin-span(2 * (@max_columns / 3), @gutter, @padding, @max_columns, @page_width); &:extend(.column-spacing); .extend-column(); }
+
 
 /* #Small screen (960+ Desktop)
 ================================================== */
@@ -51,22 +70,6 @@
     }
 
 
-/* #Mobile (Landscape)
-================================================== */
-
-    /* Note: Layout for a min width of 480px */
-
-    @media only screen and (min-width: 480px) and (max-width: 767px) {
-
-        .row                  { .mixin-width(@page_width, 480px); }
-        .span_qtr,
-        .span_half            { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, 480px); }
-        .create-mobile-spans  ( @max_columns );
-        .span_one_third,
-        .span_two_thirds      { .mixin-span_full(0); }
-    }
-
-
 /*  #Mobile (Portrait)
 ================================================== */
 
@@ -76,8 +79,34 @@
 
         .row              { .mixin-width(@page_width, 300px); }
 
+        .column-mobile { .mixin-span_mobile(0, 0); }
+
         .create-mobile-spans  ( @max_columns );
-        .span_half,
-        .span_one_third,
-        .span_two_thirds      { .mixin-span_full(0); }
+
+        .all,
+        .half,
+        .one-third,
+        .two-thirds      { &:extend(.column-mobile); }
+    }
+
+
+/* #Mobile (Landscape)
+================================================== */
+
+    /* Note: Layout for a min width of 480px */
+
+    @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+        .row                  { .mixin-width(@page_width, 480px); }
+        .all             { padding: @padding; }
+        .qtr,
+        .half            { .mixin-span(@max_columns / 2, @gutter, @padding, @max_columns, 480px); padding: @padding; }
+
+        .column-mobile { .mixin-span_mobile(0); }
+
+        .create-mobile-spans  ( @max_columns );
+
+        .one-third,
+        .two-thirds      { &:extend(.column-mobile); }
+
     }

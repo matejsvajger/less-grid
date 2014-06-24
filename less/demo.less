@@ -5,23 +5,91 @@ html, body { padding:0; margin:0; min-height: 100%; }
 
 
 body {
-	background: linear-gradient(315deg, rgba(0, 170, 255, 0.1), rgba(220, 110, 10, 0.2) 99%), url(../images/shattered.png);
+	// background: linear-gradient(315deg, rgba(0, 170, 255, 0.1), rgba(220, 110, 10, 0.2) 99%), url(../images/shattered.png);
+	background: transparent url('http://www.getpaint.net/doc/latest/images/layerswindow/checkerboard.png') repeat top left;
 	background-attachment: fixed;
 	line-height: 1.5;
-	font-family: Open Sans, sans-serif;
+	font-family: 'Exo', sans-serif;
+	font-weight: 700;
 	color: #405060;
-	font-size: 10pt;
-	padding: 20px 0 50px 0;
-	border-bottom: 50px solid transparent;
+	font-size: 26px;
+	// padding: 20px 0 50px 0;
+	// border-bottom: 50px solid transparent;
 }
 
 
-.content {
-	background: rgba(255,255,255,.9);
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25), -1px 1px 0 rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(0, 0, 0, 0.0), 0 2px 0 rgba(0, 0, 0, 0.1);
-	border-radius: 2px;
-	margin-bottom: 4px;
-	opacity: 0.9;
-	min-height: 180px;
-	padding: 10px;
+// .content {
+// 	background: rgba(255,255,255,.9);
+// 	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.25), -1px 1px 0 rgba(0, 0, 0, 0.1), 0 0 0 4px rgba(0, 0, 0, 0.0), 0 2px 0 rgba(0, 0, 0, 0.1);
+// 	border-radius: 2px;
+// 	margin-bottom: 4px;
+// 	opacity: 0.9;
+// 	min-height: 180px;
+// 	padding: 10px;
+// }
+
+.row { 
+
+	&:nth-child(7) {
+		.columns {
+			border-left: 1px solid #5d5d5d;
+			&:first-child { border-left: 0; }
+		}
+	}
+
+	.columns {
+		border-right: 1px solid #5d5d5d;
+		border-bottom: 1px solid #5d5d5d;
+		&:first-child {
+			border-left: 1px solid #5d5d5d;
+		}
+		.content {
+			min-height: 200px;
+			background-color: rgba(255, 0, 0, 0.2);
+			text-align: center;
+			line-height: 200px;
+
+			.columns {
+				border-bottom: 0;
+				box-shadow: inset 0 0px 50px #F88, inset 0 -1px 0px #000;
+			}
+
+			.content {
+				min-height: 100px;
+				line-height: 100px;
+				font-weight: 200;
+				font-size: 18px;
+				background-color: transparent;
+				text-transform: uppercase;
+				white-space: nowrap;
+			}
+
+			&.no-id:before { content: '' !important; }
+		}
+
+		&:nth-child(1) .content:before { content: '1'; }
+		&:nth-child(2) .content:before { content: '2'; }
+		&:nth-child(3) .content:before { content: '3'; }
+		&:nth-child(4) .content:before { content: '4'; }
+		&:nth-child(5) .content:before { content: '5'; }
+		&:nth-child(6) .content:before { content: '6'; }
+		&:nth-child(7) .content:before { content: '7'; }
+		&:nth-child(8) .content:before { content: '8'; }
+		&:nth-child(9) .content:before { content: '9'; }
+		&:nth-child(10) .content:before { content: '10'; }
+		&:nth-child(11) .content:before { content: '11'; }
+		&:nth-child(12) .content:before { content: '12'; }
+		&:nth-child(13) .content:before { content: '13'; }
+		&:nth-child(14) .content:before { content: '14'; }
+		&:nth-child(15) .content:before { content: '15'; }
+		&:nth-child(16) .content:before { content: '16'; }
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.row {
+		.columns 															{ border-left: 1px solid #5d5d5d; }
+		.span_1 .content 											{ min-height: 75px; line-height: 75px; }
+		&:nth-child(7) .columns:first-child 	{ border-left: 1px solid #5d5d5d; }
+	}
 }

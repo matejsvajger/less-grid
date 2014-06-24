@@ -11,62 +11,121 @@
          background-clip:padding-box !important;
     }
 
-    .mixin-span(@num, @gutter, @padding, @max_columns, @full_width: @page_width) when (ispixel(@gutter)) {
-        @gutter_pc: ((@gutter * 100) / @full_width);
-        @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
-        width:(@one_col * @num) + (@gutter_pc * (@num - 1));
-        padding:@padding;
-        margin-left:@gutter;
-    }
-    .mixin-span(@num, @gutter, @padding, @max_columns, @width) when (ispercentage(@gutter)) {
-        @gutter_pc: @gutter;
-        @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
-        width:(@one_col * @num) + (@gutter_pc * (@num - 1));
-        padding:@padding;
-        margin-left:@gutter;
-    }
+    //- Column Width Calculations
+        .mixin-span(@num, @gutter, @padding, @max_columns, @full_width: @page_width) when (ispixel(@gutter)) {
+            @gutter_pc: ((@gutter * 100) / @full_width);
+            @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            width:(@one_col * @num) + (@gutter_pc * (@num - 1));
+        }
+
+        .mixin-span(@num, @gutter, @padding, @max_columns, @width) when (ispercentage(@gutter)) {
+            @gutter_pc: @gutter;
+            @one_col: (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            width:(@one_col * @num) + (@gutter_pc * (@num - 1));
+        }
+
+    //- Column Push Calculations
+        .mixin-push(@num, @gutter, @padding, @max_columns, @full_width: @page_width) when (ispixel(@gutter)) {
+            @gutter_pc: ((@gutter * 100) / @full_width);
+            @one_col:   (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            @width:     (@one_col * @num) + (@gutter_pc * (@num - 1));
+
+            @push: @width + ( (2 * (100% - ((floor(100 / @width)) * @width))) / (floor(100 / @width)) );
+
+            margin-left: @push !important;
+        }
+
+        .mixin-push(@num, @gutter, @padding, @max_columns, @width) when (ispercentage(@gutter)) {
+            @gutter_pc: @gutter;
+            @one_col:   (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            @width:     (@one_col * @num) + (@gutter_pc * (@num - 1));
+
+            @push: @width + ( (2 * (100% - ((floor(100 / @width)) * @width))) / (floor(100 / @width)) );
+
+            margin-left: @push !important;
+        }
+
+    //- Column Pull Calculations
+        .mixin-pull(@num, @gutter, @padding, @max_columns, @full_width: @page_width) when (ispixel(@gutter)) {
+            @gutter_pc: ((@gutter * 100) / @full_width);
+            @one_col:   (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            @width:     (@one_col * @num) + (@gutter_pc * (@num - 1));
+
+            @pull: -( (2 * @width) + ( (2 * (100% - ((floor(100 / @width)) * @width))) / (floor(100 / @width)) ));
+
+            margin-left: @pull !important;
+        }
+        .mixin-pull(@num, @gutter, @padding, @max_columns, @width) when (ispercentage(@gutter)) {
+            @gutter_pc: @gutter;
+            @one_col:   (100% - (@gutter_pc * (@max_columns - 1))) / @max_columns;
+            @width:     (@one_col * @num) + (@gutter_pc * (@num - 1));
+
+            @pull: -( (2 * @width) + ( (2 * (100% - ((floor(100 / @width)) * @width))) / (floor(100 / @width)) ));
+     
+            margin-left: @pull !important;
+        }
+
 
     .mixin-span_first(@margin: 0) {
         margin-left:@margin;
     }
-    .mixin-span_full(@margin: 0) {
+    .mixin-span_full(@margin: 0, @padding: @padding) {
         width:100%;
         padding:@padding;
         .mixin-span_first(@margin);
+    }
+    .mixin-span_mobile(@margin: 0, @padding: @padding) {
+        width:100%;
+        padding:@padding;
+        margin-left:@margin !important;
     }
 
     .mixin-width(@width, @set: @page_width) when (ispixel(@width)) { width: @set; }
     .mixin-width(@width) when (ispercentage(@width)) { width: @width; }
 
+    .extend-column() when (@omitColumns = true) {  &:extend(.column); }
+
 //- #Column generator
 //-=============================================== */
     // generate the grid columns
     .create-spans(@n, @width: @page_width, @i: 1) when (@i < @n) {
-        .span_@{i} {
+        .@{column_prefix}@{i} {
             .mixin-span(@i, @gutter, @padding, @max_columns, @width);
+            &:extend(.column-spacing);
+            .extend-column();
         }
+        // create push/pull classes
+        .@{push_prefix}@{i} {
+            .mixin-push(@i, @gutter, @padding, @max_columns, @width);
+        }
+        .@{pull_prefix}@{i} {
+            .mixin-pull(@i, @gutter, @padding, @max_columns, @width);
+        }
+
         // next iteration
         .create-spans(@n, @width, (@i + 1));
     }
     // full width column gets special styles
     .create-spans(@n, @width, @i: 1) when (@i = @n) {
-        .span_@{i},
-        .span_all {
+        .@{column_prefix}@{i},
+        .all {
             .mixin-span_full(@gutter);
+            .extend-column();
        }
     }
     // change all dynamic columns into rows
     .create-mobile-spans(@n, @i:1) when (@i < @n) {
-        .span_@{i} {
-            .mixin-span_full(0);
+        .@{column_prefix}@{i} {
+          &:extend(.column-mobile);
         }
         .create-mobile-spans(@n, (@i + 1));
     }
 
-    // only recalculate span widths when gutter is a pixel value
+    //- Only recalculate column widths when gutter has a pixel value. why!? ->
+    //- [ percentage width on columns is different when gutter is fixed size and row width changes ]
     .create-spans-px(@n, @width) when (ispixel(@gutter)) { 
       .create-spans(@n, @width); 
-      .span_half       { .mixin-span(@n / 2, @gutter, @padding, @n, @width); }
-      .span_one_third  { .mixin-span(@n / 3, @gutter, @padding, @n, @width); }
-      .span_two_thirds { .mixin-span(2 * (@n / 3), @gutter, @padding, @n, @width); }
+      .half       { .mixin-span(@n / 2, @gutter, @padding, @n, @width); }
+      .one-third  { .mixin-span(@n / 3, @gutter, @padding, @n, @width); }
+      .two-thirds { .mixin-span(2 * (@n / 3), @gutter, @padding, @n, @width); }
     }
