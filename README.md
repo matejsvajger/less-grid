@@ -102,7 +102,7 @@ This will put the sidebar ontop of content on mobile views, but in a lot of case
 	<div id="content" class="span12 columns pull4"></div>
 	<div id="sidebar" class="span4  columns push12"></div>
 </div>
-
+```
 
 #### .half, .qtr, .one-third, .two-thirds
 
